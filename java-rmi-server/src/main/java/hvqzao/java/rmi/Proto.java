@@ -38,16 +38,16 @@ public class Proto implements IProto {
             return PostgreSQLDAO.consulta_deposito(documento_id, password);
         }
         
-        public Optional<Boolean> deposito(String username, String password) {
-            return PostgreSQLDAO.deposito(username, password);
+        public Optional<Boolean> deposito(int num_cuenta, Double monto) {
+            return PostgreSQLDAO.deposito(num_cuenta, monto);
         }
         
-        public Optional<Boolean> retiro(String username, String password) {
-            return PostgreSQLDAO.retiro(username, password);
+        public Optional<Boolean> retiro(int num_cuenta, Double monto) {
+            return PostgreSQLDAO.retiro(num_cuenta, monto);
         }
         
-        public Optional<Boolean> transferencia(String username, String password) {
-            return PostgreSQLDAO.transferencia(username, password);
+        public Optional<Boolean> transferencia(int cuenta1, int cuenta2, double monto) {
+            return PostgreSQLDAO.transferencia(cuenta1, cuenta2, monto);
         }
 
 }

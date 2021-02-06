@@ -148,7 +148,7 @@ public class PostgreSQLDAO {
         });
     }
     
-    public static Optional<Boolean> deposito(String username, String password) {
+    public static Optional<Boolean> deposito(int username, double password) {
         return connection.flatMap(conn -> {
             Optional<Boolean> customer = Optional.empty();
             String sql = "SELECT login(" + username + ", " + password + ")";
@@ -171,7 +171,7 @@ public class PostgreSQLDAO {
         });
     }
     
-    public static Optional<Boolean> retiro(String username, String password) {
+    public static Optional<Boolean> retiro(int username, double password) {
         return connection.flatMap(conn -> {
             Optional<Boolean> customer = Optional.empty();
             String sql = "SELECT login(" + username + ", " + password + ")";
@@ -194,10 +194,10 @@ public class PostgreSQLDAO {
         });
     }
     
-    public static Optional<Boolean> transferencia(String username, String password) {
+    public static Optional<Boolean> transferencia(int cuenta1, int cuenta2, double password) {
         return connection.flatMap(conn -> {
             Optional<Boolean> customer = Optional.empty();
-            String sql = "SELECT login(" + username + ", " + password + ")";
+            String sql = "SELECT login(" + cuenta1 + ", " + cuenta2 + ", " + password + ")";
 
             try (Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql)) {
