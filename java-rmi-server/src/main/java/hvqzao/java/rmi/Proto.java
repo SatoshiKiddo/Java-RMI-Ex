@@ -18,36 +18,36 @@ public class Proto implements IProto {
 		return result;
 	}
         
-        public Optional<Boolean> login(String username, String password) {
-        	return PostgreSQLDAO.login(username, password);
+        public Boolean login(String username, String password) throws RemoteException{
+        	return PostgreSQLDAO.login(username, password).get();
         }
         
-        public Optional<Integer> apertura_cuenta(String documento_id, String nombre, String username, String password) {
-            return PostgreSQLDAO.apertura_cuenta(documento_id, nombre, username, password);
+        public Integer apertura_cuenta(String documento_id, String nombre, String username, String password) throws RemoteException {
+            return PostgreSQLDAO.apertura_cuenta(documento_id, nombre, username, password).get();
         }
         
-        public Optional<List<Cuenta>> consulta_cuenta(String documento_id) {
-            return PostgreSQLDAO.consulta_cuenta(documento_id);
+        public List<Cuenta> consulta_cuenta(String documento_id) throws RemoteException{
+            return PostgreSQLDAO.consulta_cuenta(documento_id).get();
         }
         
-        public Optional<List<Transacciones>> consulta_transacciones(Double numero, Double limite) {
-            return PostgreSQLDAO.consulta_transacciones(numero, limite);
+        public List<Transacciones> consulta_transacciones(Double numero, Double limite) throws RemoteException{
+            return PostgreSQLDAO.consulta_transacciones(numero, limite).get();
         }
         
-        public Optional<String> consulta_deposito(String documento_id, int password) {
-            return PostgreSQLDAO.consulta_deposito(documento_id, password);
+        public String consulta_deposito(String documento_id, int password) throws RemoteException{
+            return PostgreSQLDAO.consulta_deposito(documento_id, password).get();
         }
         
-        public Optional<Boolean> deposito(int num_cuenta, Double monto) {
-            return PostgreSQLDAO.deposito(num_cuenta, monto);
+        public Boolean deposito(int num_cuenta, Double monto) throws RemoteException{
+            return PostgreSQLDAO.deposito(num_cuenta, monto).get();
         }
         
-        public Optional<Boolean> retiro(int num_cuenta, Double monto) {
-            return PostgreSQLDAO.retiro(num_cuenta, monto);
+        public Boolean retiro(int num_cuenta, Double monto) throws RemoteException{
+            return PostgreSQLDAO.retiro(num_cuenta, monto).get();
         }
         
-        public Optional<Boolean> transferencia(int cuenta1, int cuenta2, double monto) {
-            return PostgreSQLDAO.transferencia(cuenta1, cuenta2, monto);
+        public Boolean transferencia(int cuenta1, int cuenta2, double monto) throws RemoteException{
+            return PostgreSQLDAO.transferencia(cuenta1, cuenta2, monto).get();
         }
 
 }

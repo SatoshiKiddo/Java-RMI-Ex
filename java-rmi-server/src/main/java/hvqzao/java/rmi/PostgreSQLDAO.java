@@ -22,13 +22,13 @@ public class PostgreSQLDAO {
     public static Optional<Boolean> login(String username, String password) {
         return connection.flatMap(conn -> {
             Optional<Boolean> customer = Optional.empty();
-            String sql = "SELECT login(" + username + ", " + password + ")";
+            String sql = "SELECT login('" + username + "', '" + password + "')";
 
             try (Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql)) {
 
                 if (resultSet.next()) {
-                    boolean resultado = resultSet.getBoolean(0);
+                    boolean resultado = resultSet.getBoolean(1);
 
                     customer = Optional.of((Boolean)resultado);
 
@@ -45,13 +45,14 @@ public class PostgreSQLDAO {
     public static Optional<Integer> apertura_cuenta(String documento_id, String nombre, String username, String password) {
         return connection.flatMap(conn -> {
             Optional<Integer> customer = Optional.empty();
-            String sql = "SELECT apertura_cuenta("+ documento_id + ", " + nombre + ", " + username + ", " + password + ")";
+            String sql = "SELECT apertura_cuenta('"+ documento_id + "', '" + nombre + "', '" + username + "', '" + password + "');";
 
             try (Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql)) {
 
                 if (resultSet.next()) {
-                	int resultado = resultSet.getInt(0);
+                	int resultado = resultSet.getInt(1);
+                	System.out.println(resultado + " Se obtuvo esto.");
                 	
                 	customer = Optional.of(resultado);
 
@@ -59,6 +60,7 @@ public class PostgreSQLDAO {
                 }
             } catch (SQLException ex) {
                 LOGGER.log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
 
             return customer;
@@ -68,7 +70,7 @@ public class PostgreSQLDAO {
     public static Optional<List<Cuenta>> consulta_cuenta(String documento_id) {
         return connection.flatMap(conn -> {
             Optional<List<Cuenta>> customer = Optional.empty();
-            String sql = "SELECT consulta_cuentas(" + documento_id + ")";
+            String sql = "SELECT consulta_cuentas('" + documento_id + "')";
 
             try (Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql)) {
@@ -76,8 +78,8 @@ public class PostgreSQLDAO {
             	List<Cuenta> resultado = new ArrayList(); 
                 while (resultSet.next()) {
                 	resultado.add(new Cuenta(
-                			resultSet.getInt(0),
-                			resultSet.getDouble(1)
+                			resultSet.getInt(1),
+                			resultSet.getDouble(2)
                 			));
 
                     LOGGER.log(Level.INFO, "Found {0} in database", customer.get());
@@ -104,12 +106,12 @@ public class PostgreSQLDAO {
             	List<Transacciones> resultado = new ArrayList(); 
                 while (resultSet.next()) {
                 	resultado.add(new Transacciones(
-                			resultSet.getInt(0),
-                			resultSet.getDouble(1),
-                			resultSet.getDate(2),
+                			resultSet.getInt(1),
+                			resultSet.getDouble(2),
                 			resultSet.getDate(3),
-                			resultSet.getInt(4),
-                			resultSet.getInt(5)
+                			resultSet.getDate(4),
+                			resultSet.getInt(5),
+                			resultSet.getInt(6)
                 			));
                 	
                     LOGGER.log(Level.INFO, "Found {0} in database", customer.get());
@@ -128,13 +130,13 @@ public class PostgreSQLDAO {
     public static Optional<String> consulta_deposito(String documento_id, int password) {
         return connection.flatMap(conn -> {
             Optional<String> customer = Optional.empty();
-            String sql = "SELECT consulta_deposito(" + documento_id + ", " + password + ")";
+            String sql = "SELECT consulta_deposito('" + documento_id + "', " + password + ")";
 
             try (Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql)) {
 
                 if (resultSet.next()) {
-                    String resultado = resultSet.getString(0);
+                    String resultado = resultSet.getString(1);
 
                     customer = Optional.of(resultado);
 
@@ -151,13 +153,13 @@ public class PostgreSQLDAO {
     public static Optional<Boolean> deposito(int username, double password) {
         return connection.flatMap(conn -> {
             Optional<Boolean> customer = Optional.empty();
-            String sql = "SELECT login(" + username + ", " + password + ")";
+            String sql = "SELECT login(" + username + "', " + password + ")";
 
             try (Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery(sql)) {
 
                 if (resultSet.next()) {
-                    boolean resultado = resultSet.getBoolean(0);
+                    boolean resultado = resultSet.getBoolean(1);
 
                     customer = Optional.of(resultado);
 
@@ -180,7 +182,7 @@ public class PostgreSQLDAO {
                     ResultSet resultSet = statement.executeQuery(sql)) {
 
                 if (resultSet.next()) {
-                    boolean resultado = resultSet.getBoolean(0);
+                    boolean resultado = resultSet.getBoolean(1);
 
                     customer = Optional.of(resultado);
 
@@ -203,7 +205,7 @@ public class PostgreSQLDAO {
                     ResultSet resultSet = statement.executeQuery(sql)) {
 
                 if (resultSet.next()) {
-                    boolean resultado = resultSet.getBoolean(0);
+                    boolean resultado = resultSet.getBoolean(1);
 
                     customer = Optional.of(resultado);
 

@@ -45,13 +45,13 @@ public class RmiClient {
         	System.out.println("3-Deposito a cuenta");
         	System.out.println("4-Transferencia a cuenta");
         	System.out.println("5-Retiro de cuenta");
-        	while (!lector.hasNextInt()) {
-        		flag = lector.nextInt();
-        	}
+        	flag = lector.nextInt();
+        	lector.nextLine();
         	if (flag == 0)
     			break;
         	switch(flag) {
         		case 1:
+        			try {
                 	System.out.println("Ingrese nombre de usuario\n");
         			username = lector.nextLine();
         			System.out.println("Ingrese password\n");
@@ -60,17 +60,22 @@ public class RmiClient {
         			documento_id = lector.nextLine();
         			System.out.println("Ingrese su nombre\n");
         			nombre = lector.nextLine();
-        			System.out.println("Cuenta creada: " + proto.apertura_cuenta(documento_id, nombre, username, password).get());
+        			System.out.println("Muestra: " + username + password + documento_id + nombre);
+        			System.out.println("Cuenta creada: " + proto.apertura_cuenta(documento_id, nombre, username, password));
         			lector.nextLine();
+        			}
+        			catch(Exception ex) {
+        				ex.printStackTrace();
+        			}
         			break;
         		case 2: 
         			System.out.println("Ingrese nombre de usuario\n");
         			username = lector.nextLine();
         			System.out.println("Ingrese password\n");
         			password = lector.nextLine();
-        			if (proto.login(username, password).get()) {
+        			if (proto.login(username, password)) {
             			documento_id = lector.nextLine();
-        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id).get();
+        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id);
         				for( int i = 0; i < cuentas.size(); i++) {
         					System.out.println("\nCuenta " + cuentas.get(i).numero + " - monto: " + cuentas.get(i).monto);
         				}
@@ -82,10 +87,10 @@ public class RmiClient {
         			username = lector.nextLine();
         			System.out.println("Ingrese password\n");
         			password = lector.nextLine();
-        			if (proto.login(username, password).get()) {
+        			if (proto.login(username, password)) {
             			System.out.println("Ingrese su numero de id documento a realizar el deposito\n");
             			documento_id = lector.nextLine();
-        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id).get();
+        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id);
         				for( int i = 0; i < cuentas.size(); i++) {
         					System.out.println("\nCuenta " + cuentas.get(i).numero + " - monto: " + cuentas.get(i).monto);
         				}
@@ -93,7 +98,7 @@ public class RmiClient {
         				num_cuenta = lector.nextInt();
         				System.out.println("Ingrese el monto a depositar");
         				monto = lector.nextDouble();
-            			if (!proto.deposito(num_cuenta, monto).get()) {
+            			if (!proto.deposito(num_cuenta, monto)) {
             				System.out.println("Error...");
             			}
             			else {
@@ -107,10 +112,10 @@ public class RmiClient {
         			username = lector.nextLine();
         			System.out.println("Ingrese password\n");
         			password = lector.nextLine();
-        			if (proto.login(username, password).get()) {
+        			if (proto.login(username, password)) {
             			System.out.println("Ingrese su numero de id documento para realizar la transferencia\n");
             			documento_id = lector.nextLine();
-        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id).get();
+        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id);
         				for( int i = 0; i < cuentas.size(); i++) {
         					System.out.println("\nCuenta " + cuentas.get(i).numero + " - monto: " + cuentas.get(i).monto);
         				}
@@ -120,7 +125,7 @@ public class RmiClient {
         				num_cuenta2 = lector.nextInt();
         				System.out.println("Ingrese el monto a transferir");
         				monto = lector.nextDouble();
-            			if (!proto.transferencia(num_cuenta, num_cuenta2, monto).get()) {
+            			if (!proto.transferencia(num_cuenta, num_cuenta2, monto)) {
             				System.out.println("Error...");
             			}
             			else {
@@ -134,10 +139,10 @@ public class RmiClient {
         			username = lector.nextLine();
         			System.out.println("Ingrese password\n");
         			password = lector.nextLine();
-        			if (proto.login(username, password).get()) {
+        			if (proto.login(username, password)) {
             			System.out.println("Ingrese su numero de id documento a realizar el deposito\n");
             			documento_id = lector.nextLine();
-        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id).get();
+        				List<Cuenta> cuentas = proto.consulta_cuenta(documento_id);
         				for( int i = 0; i < cuentas.size(); i++) {
         					System.out.println("\nCuenta " + cuentas.get(i).numero + " - monto: " + cuentas.get(i).monto);
         				}
@@ -145,7 +150,7 @@ public class RmiClient {
         				num_cuenta = lector.nextInt();
         				System.out.println("Ingrese el monto a retirar");
         				monto = lector.nextDouble();
-            			if (!proto.retiro(num_cuenta, monto).get()) {
+            			if (!proto.retiro(num_cuenta, monto)) {
             				System.out.println("Error...");
             			}
             			else {
